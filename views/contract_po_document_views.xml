@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_contract_po_document_tree" model="ir.ui.view">
+        <field name="name">autoinfo.contract.po.document.tree</field>
+        <field name="model">autoinfo.contract.po.document</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="po_number"/>
+                <field name="contract_id"/>
+                <field name="sale_order_id"/>
+                <field name="po_date"/>
+                <field name="po_amount"/>
+                <field name="attachment_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_contract_po_document_form" model="ir.ui.view">
+        <field name="name">autoinfo.contract.po.document.form</field>
+        <field name="model">autoinfo.contract.po.document</field>
+        <field name="arch" type="xml">
+            <form string="Customer PO Document">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="contract_id"/>
+                            <field name="sale_order_id"/>
+                            <field name="attachment_id"/>
+                        </group>
+                        <group>
+                            <field name="po_number"/>
+                            <field name="po_date"/>
+                            <field name="currency_id" readonly="1"/>
+                            <field name="po_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_po_document" model="ir.actions.act_window">
+        <field name="name">Customer PO Documents</field>
+        <field name="res_model">autoinfo.contract.po.document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_contract_po_document"
+        name="Customer PO Documents"
+        parent="autoinfo_sale_contract_workflow.menu_contract_agreement"
+        action="action_contract_po_document"
+        sequence="10"
+        groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+    />
+</odoo>

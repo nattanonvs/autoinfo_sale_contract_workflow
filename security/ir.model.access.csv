@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contract_agreement_user,access.contract.agreement.user,model_autoinfo_contract_agreement,autoinfo_sale_contract_workflow.group_contract_request_user,1,1,1,0
+access_contract_po_document_user,access.contract.po.document.user,model_autoinfo_contract_po_document,autoinfo_sale_contract_workflow.group_contract_request_user,1,1,1,0
+access_contract_status_request_user,access.contract.status.request.user,model_autoinfo_contract_status_request,autoinfo_sale_contract_workflow.group_contract_request_user,1,1,1,0

@@ -1,0 +1,60 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">AUTO-INFO : Sale Contract Workflow</h2>
+        <h3 class="oe_slogan">Contract master, PO reference, and close/reactivate approval flow for Odoo 15</h3>
+        <p>
+            โมดูลนี้เพิ่ม Contract แบบศูนย์กลางให้ทีมขายใช้งานร่วมกับ Sales Order,
+            แยก workflow การปิดสัญญาออกจากปุ่มเดิมบนเอกสารขาย,
+            และบังคับให้ผ่านกระบวนการอนุมัติด้วย Tier Validation ก่อนเปลี่ยนสถานะจริง
+        </p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h4>จุดเด่นของโมดูล</h4>
+        <ul>
+            <li>รองรับ 1 Contract ต่อหลาย Customer PO และหลาย Quotation / Sales Order</li>
+            <li>มีสถานะครบ: No Agreement, Active, Close Pending, Closed, Reopen Pending</li>
+            <li>เปลี่ยนจากการปิดสัญญาตรงเป็น Request Close / Request Re-Activate</li>
+            <li>รองรับ Reject -&gt; Acknowledge -&gt; Request ใหม่ ตาม workflow ที่ควบคุมได้</li>
+            <li>บันทึก snapshot ของยอดสัญญา, ยอด invoice, และยอดรับเงินจริงตอนส่งคำขอ</li>
+            <li>จำกัดสิทธิ์ผ่านกลุ่ม Contract Request User เพื่อลดความเสี่ยงการใช้งานผิดคน</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h4>โครงสร้างหลัก</h4>
+        <ul>
+            <li><strong>Contract Agreement</strong>: สัญญาแม่ของงานขาย</li>
+            <li><strong>Contract Status Request</strong>: เอกสารคำขอเปลี่ยนสถานะสัญญา</li>
+            <li><strong>Customer PO Document</strong>: เอกสารอ้างอิง PO ที่ผูกกับ Contract และ SO โดยไม่ซ้ำไฟล์</li>
+            <li><strong>Sale Order Bridge</strong>: ปุ่มบน SO สำหรับสร้างหรือเปิดคำขอที่เกี่ยวข้อง</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h4>Dependency สำคัญ</h4>
+        <ul>
+            <li>sale_management</li>
+            <li>crm</li>
+            <li>mail</li>
+            <li>base_tier_validation</li>
+            <li>autoinfo_sale_order_invoice_amount</li>
+        </ul>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h4>Credits</h4>
+        <p>
+            The Auto-Info Co., Ltd. : Dev Team / Mr. Nattanon Vinyangkoon<br/>
+            AI Coding Assistant: TRAE SOLO / MICROSOFT 365 COPILOT
+        </p>
+    </div>
+</section>

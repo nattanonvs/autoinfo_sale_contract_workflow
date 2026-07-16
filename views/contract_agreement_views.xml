@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_contract_agreement_tree" model="ir.ui.view">
+        <field name="name">autoinfo.contract.agreement.tree</field>
+        <field name="model">autoinfo.contract.agreement</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="contract_no"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date_end"/>
+                <field name="contract_amount"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_contract_agreement_form" model="ir.ui.view">
+        <field name="name">autoinfo.contract.agreement.form</field>
+        <field name="model">autoinfo.contract.agreement</field>
+        <field name="arch" type="xml">
+            <form string="Contract Agreement">
+                <header>
+                    <button
+                        name="action_create_close_request"
+                        string="Request Close"
+                        type="object"
+                        class="btn-primary"
+                        groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+                        attrs="{'invisible': [('state', '!=', 'active')]}"
+                    />
+                    <button
+                        name="action_create_reactivate_request"
+                        string="Request Re-Activate"
+                        type="object"
+                        groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+                        attrs="{'invisible': [('state', '!=', 'closed')]}"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="no_agreement,active,close_pending,closed,reopen_pending"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="contract_no"/>
+                            <field name="partner_id"/>
+                            <field name="opportunity_id"/>
+                        </group>
+                        <group>
+                            <field name="state"/>
+                            <field name="owner_user_id"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="currency_id"/>
+                        <field name="contract_amount"/>
+                        <field name="department_manager_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Request History">
+                            <field name="status_request_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="request_type"/>
+                                    <field name="requested_by_id"/>
+                                    <field name="state"/>
+                                    <field name="submitted_at"/>
+                                    <field name="approved_by_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Customer PO">
+                            <field name="customer_po_document_ids">
+                                <tree editable="bottom">
+                                    <field name="po_number"/>
+                                    <field name="po_date"/>
+                                    <field name="po_amount"/>
+                                    <field name="sale_order_id"/>
+                                    <field name="attachment_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sale Orders">
+                            <field name="sale_order_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="state"/>
+                                    <field name="amount_total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_agreement" model="ir.actions.act_window">
+        <field name="name">Contracts</field>
+        <field name="res_model">autoinfo.contract.agreement</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_contract_agreement"
+        name="Contracts"
+        parent="sale.sale_order_menu"
+        action="action_contract_agreement"
+        sequence="80"
+        groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+    />
+</odoo>

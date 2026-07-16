@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_contract_status_request_tree" model="ir.ui.view">
+        <field name="name">autoinfo.contract.status.request.tree</field>
+        <field name="model">autoinfo.contract.status.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="contract_id"/>
+                <field name="request_type"/>
+                <field name="requested_by_id"/>
+                <field name="state" widget="badge"/>
+                <field name="submitted_at"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_contract_status_request_form" model="ir.ui.view">
+        <field name="name">autoinfo.contract.status.request.form</field>
+        <field name="model">autoinfo.contract.status.request</field>
+        <field name="arch" type="xml">
+            <form string="Contract Status Request">
+                <header>
+                    <button
+                        name="action_submit"
+                        string="Submit"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"
+                    />
+                    <button
+                        name="action_approve"
+                        string="Approve"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': ['|', ('state', '!=', 'submitted'), ('can_review', '=', False)]}"
+                    />
+                    <button
+                        name="action_reject"
+                        string="Reject"
+                        type="object"
+                        attrs="{'invisible': ['|', ('state', '!=', 'submitted'), ('can_review', '=', False)]}"
+                    />
+                    <button
+                        name="action_acknowledge"
+                        string="Acknowledge"
+                        type="object"
+                        attrs="{'invisible': [('state', '!=', 'rejected')]}"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,submitted,approved,rejected,acknowledged"
+                    />
+                </header>
+                <sheet>
+                    <field name="can_review" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="contract_id"/>
+                            <field name="request_type"/>
+                            <field name="requested_by_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="submitted_at" readonly="1"/>
+                            <field name="approved_by_id" readonly="1"/>
+                            <field name="approved_at" readonly="1"/>
+                            <field name="rejected_by_id" readonly="1"/>
+                            <field name="rejected_at" readonly="1"/>
+                            <field name="acknowledged_by_id" readonly="1"/>
+                            <field name="acknowledged_at" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Snapshot">
+                        <field name="currency_id" invisible="1"/>
+                        <field name="contract_amount_snapshot" readonly="1"/>
+                        <field name="invoice_amount_snapshot" readonly="1"/>
+                        <field name="paid_amount_snapshot" readonly="1"/>
+                    </group>
+                    <group string="Tier Validation">
+                        <field name="validated" readonly="1"/>
+                        <field name="rejected" readonly="1"/>
+                        <field name="next_review" readonly="1"/>
+                    </group>
+                    <field
+                        name="review_ids"
+                        widget="tier_validation"
+                        readonly="1"
+                        attrs="{'invisible': [('review_ids', '=', [])]}"
+                    />
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_status_request" model="ir.actions.act_window">
+        <field name="name">Contract Status Requests</field>
+        <field name="res_model">autoinfo.contract.status.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

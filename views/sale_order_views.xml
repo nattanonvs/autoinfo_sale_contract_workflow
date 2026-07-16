@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_contract_workflow" model="ir.ui.view">
+        <field name="name">sale.order.form.contract.workflow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="contract_id"/>
+                <field
+                    name="customer_po_document_id"
+                    attrs="{'invisible': [('contract_id', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_contract_request_bridge" model="ir.ui.view">
+        <field name="name">sale.order.form.contract.request.bridge</field>
+        <field name="model">sale.order</field>
+        <field
+            name="inherit_id"
+            ref="autoinfo_sale_order_invoice_amount.view_order_form_collection_buttons"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="contract_state" invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_open_close_agreement_wizard']" position="replace">
+                <button
+                    name="action_request_contract_close"
+                    string="Contract Request"
+                    type="object"
+                    class="btn-secondary"
+                    groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+                    attrs="{'invisible': ['|', ('contract_id', '=', False), ('contract_state', '!=', 'active')]}"
+                />
+                <button
+                    name="action_view_contract_request"
+                    string="View Close Request"
+                    type="object"
+                    class="btn-secondary"
+                    groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+                    attrs="{'invisible': ['|', ('contract_id', '=', False), ('contract_state', '!=', 'close_pending')]}"
+                />
+                <button
+                    name="action_request_contract_reactivate"
+                    string="Request Re-Activate"
+                    type="object"
+                    class="btn-secondary"
+                    groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+                    attrs="{'invisible': ['|', ('contract_id', '=', False), ('contract_state', '!=', 'closed')]}"
+                />
+                <button
+                    name="action_view_contract_request"
+                    string="View Re-Activate Request"
+                    type="object"
+                    class="btn-secondary"
+                    groups="autoinfo_sale_contract_workflow.group_contract_request_user"
+                    attrs="{'invisible': ['|', ('contract_id', '=', False), ('contract_state', '!=', 'reopen_pending')]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

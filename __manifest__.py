@@ -1,0 +1,26 @@
+{
+    "name": "AUTO-INFO : Sale Contract Workflow",
+    "version": "15.0.1.0.1",
+    "author": "The Auto-Info Co., Ltd., Odoo Community Association (OCA)",
+    "license": "LGPL-3",
+    "category": "Sales",
+    "summary": "Contract master and close/reactivate request workflow for Sale",
+    "depends": [
+        "sale_management",
+        "crm",
+        "mail",
+        "base_tier_validation",
+        "autoinfo_sale_order_invoice_amount",
+    ],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/ir_sequence_data.xml",
+        "data/mail_activity_data.xml",
+        "views/contract_agreement_views.xml",
+        "views/contract_po_document_views.xml",
+        "views/contract_status_request_views.xml",
+        "views/sale_order_views.xml",
+    ],
+    "installable": True,
+}
