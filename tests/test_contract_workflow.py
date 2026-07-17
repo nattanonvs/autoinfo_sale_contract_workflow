@@ -1,6 +1,7 @@
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
+from pathlib import Path
 
 
 @tagged("-at_install", "post_install")
@@ -300,6 +301,16 @@ class TestContractWorkflow(TransactionCase):
         )
         self.assertIn('name="review_ids" widget="tier_validation"', form_view.arch_db)
         self.assertIn('name="action_acknowledge"', form_view.arch_db)
+
+    def test_static_description_declares_utf8_for_thai_content(self):
+        module_root = Path(__file__).resolve().parents[1]
+        description_html = (module_root / "static" / "description" / "index.html").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn('<meta charset="utf-8"/>', description_html)
+        self.assertIn("โมดูลนี้เพิ่ม Contract แบบศูนย์กลาง", description_html)
+        self.assertNotIn("à¸", description_html)
 
     def test_contract_form_buttons_create_close_and_reactivate_requests(self):
         active_contract = self._create_contract(state="active")
